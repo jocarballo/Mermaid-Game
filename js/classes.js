@@ -9,7 +9,17 @@ class MermaidGame {
     this.lives = 0;
   }
 
-  setUp() {}
+  updatePositions() {
+    this.sharks.forEach((shark) => shark.updatePosition());
+
+    // check positions are valid
+    console.log("Sharks before: " + this.sharks.length);
+    this.sharks = this.sharks.filter(function (shark) {
+      return shark.col > 0;
+    });
+
+    console.log("Number of active sharks:" + this.sharks.length);
+  }
 
   preload() {
     this.backgroundImg = loadImage("../img/background.png");
@@ -92,11 +102,10 @@ class Heart {
 }
 
 class Shark {
-
   constructor() {
     // random position of shark
     let randomRow = Math.floor(Math.random() * (NUMBER_OF_SQUARES_IN_COL - 1));
-    console.log(randomRow)
+    //console.log(randomRow)
     this.row = randomRow;
     this.col = 9;
     this.width = WIDTH_OF_SQUARE;
@@ -124,8 +133,8 @@ class Shark {
     //console.log('width : ' + WIDTHOFSQUARE)
     //console.log('height: ' + HEIGHTOFSQUARE)
     image(this.image, x, y, this.width, this.height);
-    console.log("drawing shark");
-    console.log(this.row)
+    //console.log("drawing shark");
+    //console.log(this.row)
   }
 }
 
