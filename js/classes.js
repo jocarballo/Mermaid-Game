@@ -14,12 +14,12 @@ class MermaidGame {
 
     // check positions of sharks are valid
     // here I filtered the sharks array and returned the ones that are in the image ( col > 0)
-    console.log("Sharks before: " + this.sharks.length);
+    //console.log("Sharks before: " + this.sharks.length);
     this.sharks = this.sharks.filter(function (shark) {
       return shark.col >= 0;
     });
 
-    console.log("Number of active sharks:" + this.sharks.length);
+    //console.log("Number of active sharks:" + this.sharks.length);
 
     // I want to put a new shark when I've got less than 3 in canvas
     if (this.sharks.length < 3) {
@@ -38,14 +38,24 @@ class MermaidGame {
       return treasure.col >= 0;
     });
 
-    console.log("Number of active coins:" + this.treasures.length);
+    //console.log("Number of active coins:" + this.treasures.length);
 
     // I want to put a new coin when I've got less than 3 in canvas
     if (this.treasures.length < 2) {
-        // I add coins to the treasures array
-        this.treasures.push(new Treasure());
-        //console.log(this.treasures)
+      // I add coins to the treasures array
+      //console.log(this.treasures)
+
+      let treasureRow = Math.floor(Math.random() * (NUMBER_OF_SQUARES_IN_COL - 1));
+      let treasureCol = NUMBER_OF_SQUARES_IN_ROW - 1;
+      console.log("" + treasureRow + " " + treasureCol)
+      let hasNoCollision = this.sharks.every((shark) => {
+        return shark.row != treasureRow || shark.col != treasureCol;
+      });
+
+      if (hasNoCollision) {
+        this.treasures.push(new Treasure(treasureRow, treasureCol));
       }
+    }
 
     this.collision();
   }
@@ -66,7 +76,6 @@ class MermaidGame {
     this.sharks.forEach((shark) => {
       let sharkRow = shark.row;
       let sharkCol = shark.col;
-      console.log(`${mermaidRow} ${mermaidCol} ${sharkRow} ${sharkCol}`);
       if (sharkRow == mermaidRow && sharkCol == mermaidCol) {
         console.log("There was a collision");
         this.lives = this.lives - 1;
@@ -76,7 +85,6 @@ class MermaidGame {
     this.treasures.forEach((treasure) => {
       let treasureRow = treasure.row;
       let treasureCol = treasure.col;
-      console.log(`${mermaidRow} ${mermaidCol} ${treasureRow} ${treasureCol}`);
       if (treasureRow == mermaidRow && treasureCol == mermaidCol) {
         console.log("There was a collision");
         this.score = this.score + 10;
@@ -126,16 +134,12 @@ class Mermaid {
 }
 
 class Treasure {
-  constructor() {
+  constructor(row, col) {
     // random position of coin
-    let randomCoinRow = Math.floor(
-      Math.random() * (NUMBER_OF_SQUARES_IN_COL - 1)
-    );
-    //console.log(randomRow)
-    this.row = randomCoinRow;
-    this.col = 9;
-    this.width = WIDTH_OF_SQUARE/3;
-    this.height = HEIGHT_OF_SQUARE/3;
+    this.row = row;
+    this.col = col;
+    this.width = WIDTH_OF_SQUARE / 3;
+    this.height = HEIGHT_OF_SQUARE / 3;
     this.image = coinImage;
   }
 
@@ -145,13 +149,12 @@ class Treasure {
 
   draw() {
     //defining the position of coin
-    let x = (WIDTH_OF_SQUARE * this.col) + this.width;
-    let y = (HEIGHT_OF_SQUARE * this.row) + this.height;
+    let x = WIDTH_OF_SQUARE * this.col + this.width;
+    let y = HEIGHT_OF_SQUARE * this.row + this.height;
     //console.log('width : ' + WIDTHOFSQUARE)
     //console.log('height: ' + HEIGHTOFSQUARE)
     image(this.image, x, y, this.width, this.height);
-    console.log("drawing coin");
-    //console.log(this.row)
+    //console.log("drawing coin");
   }
 }
 
@@ -196,11 +199,6 @@ class Shark {
     image(this.image, x, y, this.width, this.height);
     //console.log("drawing shark");
     //console.log(this.row)
-
-    // made the relation between JS and CSS (Score and Lives)
-    document.getElementById("score").innerText = mermaidGame.score;
-
-    document.getElementById("lives").innerText = mermaidGame.lives;
   }
 }
 

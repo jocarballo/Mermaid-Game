@@ -1,29 +1,36 @@
 const mermaidGame = new MermaidGame();
-
 /* 
     Here I create the canvas and loading the images of the game
 */
 function setup() {
-  createCanvas(WIDTH, HEIGHT);
+  canvas = createCanvas(WIDTH, HEIGHT);
+
   //console.log('im here')
   mermaidGame.preload();
   sharkImage = loadImage("../img/shark.png");
   coinImage = loadImage("../img/coin.png");
   schedulePositionUpdate();
-  mermaidGame.treasures.push(new Treasure())
-
+  mermaidGame.treasures.push(new Treasure());
 }
 
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+}
 // Here I have the draw of background
 
 function draw() {
   background(mermaidGame.backgroundImg);
- 
+
   mermaidGame.sharks.forEach((shark) => shark.draw());
-  console.log()
   mermaidGame.treasures.forEach((treasure) => treasure.draw());
   mermaidGame.mermaid.draw();
-  console.log('treasure here')
+  rect(WIDTH * 0.88, 20, 80, 75);
+  text(`Score: ${mermaidGame.score}`, WIDTH * 0.9, 50);
+  text(`Lives: ${mermaidGame.lives}`, WIDTH * 0.9, 75);
+
+  // made the relation between JS and CSS (Score and Lives)
+  //document.getElementById("score").innerText = mermaidGame.score;
+  //document.getElementById("lives").innerText = mermaidGame.lives;
 }
 
 function keyPressed() {
@@ -33,16 +40,11 @@ function keyPressed() {
   if (keyCode === 40) {
     mermaidGame.mermaid.moveDown();
   }
-
-  console.log("key was pressed");
 }
 
 function schedulePositionUpdate() {
   setTimeout(function () {
     mermaidGame.updateGameStatus();
-    schedulePositionUpdate()
+    schedulePositionUpdate();
   }, 1000);
 }
-
-
-
