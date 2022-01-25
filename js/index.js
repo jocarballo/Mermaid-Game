@@ -8,8 +8,9 @@ function setup() {
   //console.log('im here')
   mermaidGame.preload();
   sharkImage = loadImage("../img/shark.png");
-  coinImage = loadImage("../img/coin.png")
+  coinImage = loadImage("../img/coin.png");
   schedulePositionUpdate();
+  mermaidGame.treasures.push(new Treasure())
 
 }
 
@@ -19,7 +20,9 @@ function draw() {
   background(mermaidGame.backgroundImg);
   mermaidGame.mermaid.draw();
   mermaidGame.sharks.forEach((shark) => shark.draw());
-  
+  console.log()
+  mermaidGame.treasures.forEach((treasure) => treasure.draw());
+  console.log('treasure here')
 }
 
 function keyPressed() {
@@ -35,7 +38,7 @@ function keyPressed() {
 
 function schedulePositionUpdate() {
   setTimeout(function () {
-    mermaidGame.updatePositions();
+    mermaidGame.updateGameStatus();
     schedulePositionUpdate()
   }, 1000);
 }

@@ -6,10 +6,10 @@ class MermaidGame {
     this.sharks = [];
     this.backgroundImg;
     this.score = 0;
-    this.lives = 500;
+    this.lives = 0;
   }
 
-  updatePositions() {
+  updateGameStatus() {
     this.sharks.forEach((shark) => shark.updatePosition());
 
     // check positions are valid
@@ -27,6 +27,9 @@ class MermaidGame {
       this.sharks.push(new Shark());
       //console.log(this.sharks)
     }
+
+    // ---------------------------------" --------------------------------------------"
+    this.treasures.forEach((shark) => shark.updatePosition());
 
     this.collision();
   }
@@ -98,10 +101,15 @@ class Mermaid {
 
 class Treasure {
   constructor() {
-    this.row = 0;
-    this.col = 0;
-    this.width = 50;
-    this.height = 50;
+    // random position of coin
+    let randomCoinRow = Math.floor(
+      Math.random() * (NUMBER_OF_SQUARES_IN_COL - 1)
+    );
+    //console.log(randomRow)
+    this.row = randomCoinRow;
+    this.col = 9;
+    this.width = WIDTH_OF_SQUARE;
+    this.height = HEIGHT_OF_SQUARE;
     this.image = coinImage;
   }
 
@@ -109,7 +117,16 @@ class Treasure {
     this.col = this.col - 1;
   }
 
-  draw() {}
+  draw() {
+    //defining the position of coin
+    let x = WIDTH_OF_SQUARE * this.col;
+    let y = HEIGHT_OF_SQUARE * this.row;
+    //console.log('width : ' + WIDTHOFSQUARE)
+    //console.log('height: ' + HEIGHTOFSQUARE)
+    image(this.image, x, y, this.width, this.height);
+    console.log("drawing coin");
+    //console.log(this.row)
+  }
 }
 
 class Heart {
