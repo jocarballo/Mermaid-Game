@@ -39,3 +39,6 @@ function schedulePositionUpdate() {
     schedulePositionUpdate()
   }, 1000);
 }
+
+
+

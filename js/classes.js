@@ -6,7 +6,7 @@ class MermaidGame {
     this.sharks = [];
     this.backgroundImg;
     this.score = 0;
-    this.lives = 0;
+    this.lives = 500;
   }
 
   updatePositions() {
@@ -16,7 +16,7 @@ class MermaidGame {
     // here I filtered the sharks array and returned the ones that are in the image ( col > 0)
     console.log("Sharks before: " + this.sharks.length);
     this.sharks = this.sharks.filter(function (shark) {
-      return shark.col > 0;
+      return shark.col >= 0;
     });
 
     console.log("Number of active sharks:" + this.sharks.length);
@@ -27,6 +27,8 @@ class MermaidGame {
       this.sharks.push(new Shark());
       //console.log(this.sharks)
     }
+
+    this.collision();
   }
 
   preload() {
@@ -38,11 +40,24 @@ class MermaidGame {
     }
   }
 
-  draw() {}
+  collision() {
+    let mermaidRow = this.mermaid.row;
+    let mermaidCol = this.mermaid.col;
+
+    this.sharks.forEach((shark) => {
+      let sharkRow = shark.row;
+      let sharkCol = shark.col;
+      console.log(`${mermaidRow} ${mermaidCol} ${sharkRow} ${sharkCol}`);
+      if (sharkRow == mermaidRow && sharkCol == mermaidCol) {
+        console.log("There was a collision");
+        this.lives = this.lives - 1;
+      }
+    });
+  }
 }
 
 class Mermaid {
-  constructor(row, col) {
+  constructor() {
     this.row = 0;
     this.col = 0;
     //the same value of the square just to simplify
@@ -129,10 +144,6 @@ class Shark {
     this.col = this.col - 1;
   }
 
-  collision(mermaidInfo) {
-    // here the shark detects a collision with the mermaid
-  }
-
   draw() {
     //defining the position of shark
     let x = WIDTH_OF_SQUARE * this.col;
@@ -142,6 +153,11 @@ class Shark {
     image(this.image, x, y, this.width, this.height);
     //console.log("drawing shark");
     //console.log(this.row)
+
+    // made the relation between JS and CSS (Score and Lives)
+    document.getElementById("score").innerText = mermaidGame.score;
+
+    document.getElementById("lives").innerText = mermaidGame.lives;
   }
 }
 
