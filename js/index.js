@@ -7,7 +7,10 @@ function setup() {
   createCanvas(WIDTH, HEIGHT);
   //console.log('im here')
   mermaidGame.preload();
+  sharkImage = loadImage("../img/shark.png");
+  coinImage = loadImage("../img/coin.png")
   schedulePositionUpdate();
+
 }
 
 // Here I have the draw of background
@@ -16,6 +19,7 @@ function draw() {
   background(mermaidGame.backgroundImg);
   mermaidGame.mermaid.draw();
   mermaidGame.sharks.forEach((shark) => shark.draw());
+  
 }
 
 function keyPressed() {

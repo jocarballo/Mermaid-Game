@@ -3,7 +3,7 @@ class MermaidGame {
     this.mermaid = new Mermaid();
     this.treasures = [];
     this.hearts = [];
-    this.sharks = [new Shark()];
+    this.sharks = [];
     this.backgroundImg;
     this.score = 0;
     this.lives = 0;
@@ -13,12 +13,20 @@ class MermaidGame {
     this.sharks.forEach((shark) => shark.updatePosition());
 
     // check positions are valid
+    // here I filtered the sharks array and returned the ones that are in the image ( col > 0)
     console.log("Sharks before: " + this.sharks.length);
     this.sharks = this.sharks.filter(function (shark) {
       return shark.col > 0;
     });
 
     console.log("Number of active sharks:" + this.sharks.length);
+
+    // I want to put a new shark when I've got less than 3 in canvas
+    if (this.sharks.length < 3) {
+      // I add sharks to the sharks array
+      this.sharks.push(new Shark());
+      //console.log(this.sharks)
+    }
   }
 
   preload() {
@@ -79,12 +87,14 @@ class Treasure {
     this.col = 0;
     this.width = 50;
     this.height = 50;
-    this.image;
+    this.image = coinImage;
   }
 
   updatePosition() {
     this.col = this.col - 1;
   }
+
+  draw() {}
 }
 
 class Heart {
@@ -110,13 +120,10 @@ class Shark {
     this.col = 9;
     this.width = WIDTH_OF_SQUARE;
     this.height = HEIGHT_OF_SQUARE;
-    this.image;
+    this.image = sharkImage;
   }
 
-  preload() {
-    //here I need to put sharks img
-    this.image = loadImage("../img/shark.png");
-  }
+  preload() {}
 
   updatePosition() {
     this.col = this.col - 1;
@@ -139,3 +146,6 @@ class Shark {
 }
 
 /* ------------------------------------------------------ */
+
+let sharkImage;
+let coinImage;
