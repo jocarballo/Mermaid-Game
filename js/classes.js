@@ -12,7 +12,7 @@ class MermaidGame {
   updateGameStatus() {
     this.sharks.forEach((shark) => shark.updatePosition());
 
-    // check positions are valid
+    // check positions of sharks are valid
     // here I filtered the sharks array and returned the ones that are in the image ( col > 0)
     console.log("Sharks before: " + this.sharks.length);
     this.sharks = this.sharks.filter(function (shark) {
@@ -29,7 +29,23 @@ class MermaidGame {
     }
 
     // ---------------------------------" --------------------------------------------"
-    this.treasures.forEach((shark) => shark.updatePosition());
+    this.treasures.forEach((treasure) => treasure.updatePosition());
+
+    // check positions of coins are valid
+    // here I filtered the treasures array and returned the ones that are in the image ( col > 0)
+    console.log("Coins before: " + this.treasures.length);
+    this.treasures = this.treasures.filter(function (treasure) {
+      return treasure.col >= 0;
+    });
+
+    console.log("Number of active coins:" + this.treasures.length);
+
+    // I want to put a new coin when I've got less than 3 in canvas
+    if (this.treasures.length < 2) {
+        // I add coins to the treasures array
+        this.treasures.push(new Treasure());
+        //console.log(this.treasures)
+      }
 
     this.collision();
   }
@@ -54,6 +70,16 @@ class MermaidGame {
       if (sharkRow == mermaidRow && sharkCol == mermaidCol) {
         console.log("There was a collision");
         this.lives = this.lives - 1;
+      }
+    });
+
+    this.treasures.forEach((treasure) => {
+      let treasureRow = treasure.row;
+      let treasureCol = treasure.col;
+      console.log(`${mermaidRow} ${mermaidCol} ${treasureRow} ${treasureCol}`);
+      if (treasureRow == mermaidRow && treasureCol == mermaidCol) {
+        console.log("There was a collision");
+        this.score = this.score + 10;
       }
     });
   }
@@ -108,8 +134,8 @@ class Treasure {
     //console.log(randomRow)
     this.row = randomCoinRow;
     this.col = 9;
-    this.width = WIDTH_OF_SQUARE;
-    this.height = HEIGHT_OF_SQUARE;
+    this.width = WIDTH_OF_SQUARE/3;
+    this.height = HEIGHT_OF_SQUARE/3;
     this.image = coinImage;
   }
 
@@ -119,8 +145,8 @@ class Treasure {
 
   draw() {
     //defining the position of coin
-    let x = WIDTH_OF_SQUARE * this.col;
-    let y = HEIGHT_OF_SQUARE * this.row;
+    let x = (WIDTH_OF_SQUARE * this.col) + this.width;
+    let y = (HEIGHT_OF_SQUARE * this.row) + this.height;
     //console.log('width : ' + WIDTHOFSQUARE)
     //console.log('height: ' + HEIGHTOFSQUARE)
     image(this.image, x, y, this.width, this.height);

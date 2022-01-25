@@ -18,10 +18,11 @@ function setup() {
 
 function draw() {
   background(mermaidGame.backgroundImg);
-  mermaidGame.mermaid.draw();
+ 
   mermaidGame.sharks.forEach((shark) => shark.draw());
   console.log()
   mermaidGame.treasures.forEach((treasure) => treasure.draw());
+  mermaidGame.mermaid.draw();
   console.log('treasure here')
 }
 
