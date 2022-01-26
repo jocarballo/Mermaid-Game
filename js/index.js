@@ -24,7 +24,8 @@ function draw() {
   mermaidGame.sharks.forEach((shark) => shark.draw());
   mermaidGame.treasures.forEach((treasure) => treasure.draw());
   mermaidGame.mermaid.draw();
-  rect(WIDTH * 0.88, 20, 80, 75);
+  rect(WIDTH * 0.88, 20, 90, 75, 20);
+  
   text(`Score: ${mermaidGame.score}`, WIDTH * 0.9, 50);
   text(`Lives: ${mermaidGame.lives}`, WIDTH * 0.9, 75);
 

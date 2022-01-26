@@ -12,13 +12,6 @@ class MermaidGame {
   updateGameStatus() {
     this.sharks.forEach((shark) => shark.updatePosition());
 
-    // check positions of sharks are valid
-    // here I filtered the sharks array and returned the ones that are in the image ( col > 0)
-    //console.log("Sharks before: " + this.sharks.length);
-    this.sharks = this.sharks.filter(function (shark) {
-      return shark.col >= 0;
-    });
-
     //console.log("Number of active sharks:" + this.sharks.length);
 
     // I want to put a new shark when I've got less than 3 in canvas
@@ -30,24 +23,21 @@ class MermaidGame {
 
     // ---------------------------------" --------------------------------------------"
     this.treasures.forEach((treasure) => treasure.updatePosition());
-
-    // check positions of coins are valid
-    // here I filtered the treasures array and returned the ones that are in the image ( col > 0)
-    console.log("Coins before: " + this.treasures.length);
-    this.treasures = this.treasures.filter(function (treasure) {
-      return treasure.col >= 0;
-    });
-
     //console.log("Number of active coins:" + this.treasures.length);
 
-    // I want to put a new coin when I've got less than 3 in canvas
+
+    // put a new coin when got less than 3 in canvas
     if (this.treasures.length < 2) {
-      // I add coins to the treasures array
+
+
+      //add coins to the treasures array
       //console.log(this.treasures)
 
-      let treasureRow = Math.floor(Math.random() * (NUMBER_OF_SQUARES_IN_COL - 1));
+      let treasureRow = Math.floor(
+        Math.random() * (NUMBER_OF_SQUARES_IN_COL - 1)
+      );
       let treasureCol = NUMBER_OF_SQUARES_IN_ROW - 1;
-      console.log("" + treasureRow + " " + treasureCol)
+      console.log("" + treasureRow + " " + treasureCol);
       let hasNoCollision = this.sharks.every((shark) => {
         return shark.row != treasureRow || shark.col != treasureCol;
       });
@@ -58,6 +48,29 @@ class MermaidGame {
     }
 
     this.collision();
+
+    // check positions of coins are valid
+    // here filtered the treasures array and returned the ones that are in the image ( col > 0). Then, removed the coin when collise with mermaid
+    //console.log("Coins before: " + this.treasures.length);
+    let mermaidRow = this.mermaid.row;
+    let mermaidCol = this.mermaid.col;
+
+    
+    this.treasures = this.treasures.filter(function (treasure) {
+      let treasureRow = treasure.row;
+      let treasureCol = treasure.col;
+
+      return (treasure.col >= 0 && (treasureRow != mermaidRow || treasureCol != mermaidCol));
+    });
+
+    // check positions of sharks are valid
+    // here I filtered the sharks array and returned the ones that are in the image ( col > 0)
+    //console.log("Sharks before: " + this.sharks.length);
+    this.sharks = this.sharks.filter(function (shark) {
+        let sharkRow = shark.row;
+        let sharkCol = shark.col;
+        return shark.col >= 0 && (sharkRow != mermaidRow || sharkCol != mermaidCol);
+      });
   }
 
   preload() {
@@ -90,6 +103,8 @@ class MermaidGame {
         this.score = this.score + 10;
       }
     });
+
+    
   }
 }
 
