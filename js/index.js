@@ -7,8 +7,8 @@ function setup() {
 
   //console.log('im here')
   mermaidGame.preload();
-  sharkImage = loadImage("./img/shark.png");
-  coinImage = loadImage("./img/coin.png");
+  sharkImage = loadImage("img/shark.png");
+  coinImage = loadImage("img/coin.png");
   schedulePositionUpdate();
   mermaidGame.treasures.push(new Treasure());
 }

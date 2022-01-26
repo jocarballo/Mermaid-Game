@@ -75,7 +75,7 @@ class MermaidGame {
   }
 
   preload() {
-    this.backgroundImg = loadImage("./img/background.png");
+    this.backgroundImg = loadImage("img/background.png");
     this.mermaid.preload();
     for (let i = 0; i < this.sharks.length; i++) {
       let shark = this.sharks[i];
@@ -119,7 +119,7 @@ class Mermaid {
 
   preload() {
     //here I need to put mermaids img
-    this.image = loadImage("./img/mermaid.png");
+    this.image = loadImage("img/mermaid.png");
   }
 
   moveUp() {
@@ -182,7 +182,7 @@ class Heart {
   }
 
   preload() {
-    heartImage = loadImage("./img/heart.png");
+    heartImage = loadImage("img/heart.png");
   }
 }
 
