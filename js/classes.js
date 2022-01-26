@@ -2,7 +2,7 @@ class MermaidGame {
   constructor() {
     this.mermaid = new Mermaid();
     this.treasures = [];
-    this.hearts = [];
+    this.hearts;
     this.sharks = [];
     this.backgroundImg;
     this.score = 0;
@@ -25,11 +25,8 @@ class MermaidGame {
     this.treasures.forEach((treasure) => treasure.updatePosition());
     //console.log("Number of active coins:" + this.treasures.length);
 
-
     // put a new coin when got less than 3 in canvas
     if (this.treasures.length < 2) {
-
-
       //add coins to the treasures array
       //console.log(this.treasures)
 
@@ -55,26 +52,30 @@ class MermaidGame {
     let mermaidRow = this.mermaid.row;
     let mermaidCol = this.mermaid.col;
 
-    
     this.treasures = this.treasures.filter(function (treasure) {
       let treasureRow = treasure.row;
       let treasureCol = treasure.col;
 
-      return (treasure.col >= 0 && (treasureRow != mermaidRow || treasureCol != mermaidCol));
+      return (
+        treasure.col >= 0 &&
+        (treasureRow != mermaidRow || treasureCol != mermaidCol)
+      );
     });
 
     // check positions of sharks are valid
     // here I filtered the sharks array and returned the ones that are in the image ( col > 0)
     //console.log("Sharks before: " + this.sharks.length);
     this.sharks = this.sharks.filter(function (shark) {
-        let sharkRow = shark.row;
-        let sharkCol = shark.col;
-        return shark.col >= 0 && (sharkRow != mermaidRow || sharkCol != mermaidCol);
-      });
+      let sharkRow = shark.row;
+      let sharkCol = shark.col;
+      return (
+        shark.col >= 0 && (sharkRow != mermaidRow || sharkCol != mermaidCol)
+      );
+    });
   }
 
   preload() {
-    this.backgroundImg = loadImage("../img/background.png");
+    this.backgroundImg = loadImage("./img/background.png");
     this.mermaid.preload();
     for (let i = 0; i < this.sharks.length; i++) {
       let shark = this.sharks[i];
@@ -103,8 +104,6 @@ class MermaidGame {
         this.score = this.score + 10;
       }
     });
-
-    
   }
 }
 
@@ -120,7 +119,7 @@ class Mermaid {
 
   preload() {
     //here I need to put mermaids img
-    this.image = loadImage("../img/mermaid.png");
+    this.image = loadImage("./img/mermaid.png");
   }
 
   moveUp() {
@@ -179,11 +178,11 @@ class Heart {
     this.col = 0;
     this.width = 50;
     this.height = 50;
-    this.image;
+    this.image = heartImage;
   }
 
-  updatePosition() {
-    this.col = this.col - 1;
+  preload() {
+    heartImage = loadImage("./img/heart.png");
   }
 }
 
@@ -221,3 +220,4 @@ class Shark {
 
 let sharkImage;
 let coinImage;
+let heartImage;

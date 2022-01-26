@@ -7,8 +7,8 @@ function setup() {
 
   //console.log('im here')
   mermaidGame.preload();
-  sharkImage = loadImage("../img/shark.png");
-  coinImage = loadImage("../img/coin.png");
+  sharkImage = loadImage("./img/shark.png");
+  coinImage = loadImage("./img/coin.png");
   schedulePositionUpdate();
   mermaidGame.treasures.push(new Treasure());
 }
@@ -24,10 +24,18 @@ function draw() {
   mermaidGame.sharks.forEach((shark) => shark.draw());
   mermaidGame.treasures.forEach((treasure) => treasure.draw());
   mermaidGame.mermaid.draw();
-  rect(WIDTH * 0.88, 20, 90, 75, 20);
-  
-  text(`Score: ${mermaidGame.score}`, WIDTH * 0.9, 50);
-  text(`Lives: ${mermaidGame.lives}`, WIDTH * 0.9, 75);
+
+  // Score and Lives
+  let c = color(255, 204, 0);
+  fill(c);
+  rect(WIDTH * 0.74, 35, 240, 75, 20);
+
+    c = color(0, 128, 128);
+  fill(c);
+  text(`Score: ${mermaidGame.score}`, WIDTH * 0.85, 65);
+  text(`Lives: ${mermaidGame.lives}`, WIDTH * 0.85, 100);
+  textSize(25);
+  textFont("Georgia");
 
   // made the relation between JS and CSS (Score and Lives)
   //document.getElementById("score").innerText = mermaidGame.score;
@@ -49,3 +57,5 @@ function schedulePositionUpdate() {
     schedulePositionUpdate();
   }, 1000);
 }
+
+
