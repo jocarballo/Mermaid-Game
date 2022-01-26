@@ -2,15 +2,15 @@ class MermaidGame {
   constructor() {
     this.mermaid = new Mermaid();
     this.treasures = [];
-    this.hearts;
     this.sharks = [];
     this.backgroundImg;
     this.score = 0;
-    this.lives = 0;
+    this.lives = 1;
   }
 
   updateGameStatus() {
     this.sharks.forEach((shark) => shark.updatePosition());
+
 
     //console.log("Number of active sharks:" + this.sharks.length);
 
@@ -81,6 +81,8 @@ class MermaidGame {
       let shark = this.sharks[i];
       shark.preload();
     }
+
+    
   }
 
   collision() {
@@ -102,6 +104,7 @@ class MermaidGame {
       if (treasureRow == mermaidRow && treasureCol == mermaidCol) {
         console.log("There was a collision");
         this.score = this.score + 10;
+        
       }
     });
   }
@@ -110,7 +113,7 @@ class MermaidGame {
 class Mermaid {
   constructor() {
     this.row = 0;
-    this.col = 0;
+    this.col = 1;
     //the same value of the square just to simplify
     this.width = WIDTH_OF_SQUARE;
     this.height = HEIGHT_OF_SQUARE;
@@ -138,7 +141,7 @@ class Mermaid {
 
   draw() {
     //defining the position of mermaid
-    let x = this.row;
+    let x = WIDTH_OF_SQUARE * this.col
     let y = HEIGHT_OF_SQUARE * this.row;
     //console.log('width : ' + WIDTHOFSQUARE)
     //console.log('height: ' + HEIGHTOFSQUARE)
@@ -147,13 +150,14 @@ class Mermaid {
   }
 }
 
+
 class Treasure {
   constructor(row, col) {
     // random position of coin
     this.row = row;
     this.col = col;
-    this.width = WIDTH_OF_SQUARE / 3;
-    this.height = HEIGHT_OF_SQUARE / 3;
+    this.width = WIDTH_OF_SQUARE / 2;
+    this.height = HEIGHT_OF_SQUARE / 2;
     this.image = coinImage;
   }
 
@@ -169,20 +173,6 @@ class Treasure {
     //console.log('height: ' + HEIGHTOFSQUARE)
     image(this.image, x, y, this.width, this.height);
     //console.log("drawing coin");
-  }
-}
-
-class Heart {
-  constructor() {
-    this.row = 0;
-    this.col = 0;
-    this.width = 50;
-    this.height = 50;
-    this.image = heartImage;
-  }
-
-  preload() {
-    heartImage = loadImage("img/heart.png");
   }
 }
 
@@ -220,4 +210,5 @@ class Shark {
 
 let sharkImage;
 let coinImage;
-let heartImage;
+let backgroundImage;
+
