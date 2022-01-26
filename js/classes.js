@@ -3,14 +3,20 @@ class MermaidGame {
     this.mermaid = new Mermaid();
     this.treasures = [];
     this.sharks = [];
-    this.backgroundImg;
+    this.background = new Background();
     this.score = 0;
+    this.lives = 3;
+  }
+
+  clear() {
     this.lives = 1;
+    this.score = 0;
+    this.sharks = [];
+    this.treasures = [];
   }
 
   updateGameStatus() {
     this.sharks.forEach((shark) => shark.updatePosition());
-
 
     //console.log("Number of active sharks:" + this.sharks.length);
 
@@ -75,14 +81,13 @@ class MermaidGame {
   }
 
   preload() {
-    this.backgroundImg = loadImage("img/background.png");
+    this.background.preload();
+
     this.mermaid.preload();
     for (let i = 0; i < this.sharks.length; i++) {
       let shark = this.sharks[i];
       shark.preload();
     }
-
-    
   }
 
   collision() {
@@ -103,10 +108,42 @@ class MermaidGame {
       let treasureCol = treasure.col;
       if (treasureRow == mermaidRow && treasureCol == mermaidCol) {
         console.log("There was a collision");
+        coinSound.play();
         this.score = this.score + 10;
-        
       }
     });
+  }
+}
+
+class Background {
+  constructor() {
+    this.backgroundImages;
+  }
+
+  draw() {
+    console.log("this is the background");
+    // width and height are variables set by P5
+    this.backgroundImages.forEach(function (img) {
+      img.x -= img.speed;
+      image(img.src, img.x, 0, width, height);
+      image(img.src, img.x + width, 0, width, height);
+      if (img.x <= -width) {
+        img.x = 0;
+      }
+    });
+  }
+
+  preload() {
+    this.backgroundImages = [
+      { src: loadImage("img/1.png"), x: 0, speed: 0 },
+      { src: loadImage("img/2.png"), x: 0, speed: 1 },
+      { src: loadImage("img/3.png"), x: 0, speed: 1 },
+      { src: loadImage("img/4.png"), x: 0, speed: 1 },
+      { src: loadImage("img/5.png"), x: 0, speed: 1 },
+      { src: loadImage("img/6.png"), x: 0, speed: 2 },
+      { src: loadImage("img/7.png"), x: 0, speed: 2 },
+      { src: loadImage("img/8.png"), x: 0, speed: 3 },
+    ];
   }
 }
 
@@ -141,7 +178,7 @@ class Mermaid {
 
   draw() {
     //defining the position of mermaid
-    let x = WIDTH_OF_SQUARE * this.col
+    let x = WIDTH_OF_SQUARE * this.col;
     let y = HEIGHT_OF_SQUARE * this.row;
     //console.log('width : ' + WIDTHOFSQUARE)
     //console.log('height: ' + HEIGHTOFSQUARE)
@@ -150,14 +187,13 @@ class Mermaid {
   }
 }
 
-
 class Treasure {
   constructor(row, col) {
     // random position of coin
     this.row = row;
     this.col = col;
-    this.width = WIDTH_OF_SQUARE / 2;
-    this.height = HEIGHT_OF_SQUARE / 2;
+    this.width = WIDTH_OF_SQUARE / 3;
+    this.height = HEIGHT_OF_SQUARE / 3;
     this.image = coinImage;
   }
 
@@ -207,8 +243,4 @@ class Shark {
 }
 
 /* ------------------------------------------------------ */
-
-let sharkImage;
-let coinImage;
-let backgroundImage;
 
