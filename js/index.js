@@ -81,7 +81,7 @@ function drawInstructionsGame() {
   drawKeyInstruction("Move Up", upImage, 300);
   drawKeyInstruction("Move Down", downImage, 360);
 
-  text(`press ENTER to start!`, WIDTH * 0.35, 450);
+  text(`press ENTER to start!`, WIDTH * 0.37, 450);
 
   image(mermaidImage, 70, 105, 200, 200);
   image(sharkImage, 770, 405, 150, 150);
