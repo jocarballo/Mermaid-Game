@@ -3,7 +3,11 @@ const mermaidGame = new MermaidGame();
 let mode; // determine the game has started
 
 function preload() {
-  // load images
+  preloadImages();
+  preloadSounds();
+}
+
+function preloadImages() {
   heartImage = loadImage("img/heart.png");
   scoreImage = loadImage("img/coin.png");
   mermaidImage = loadImage("img/mermaid.png");
@@ -14,8 +18,9 @@ function preload() {
   gameoverImage = loadImage("img/gameover.png");
   coinImage = loadImage("img/coin.png");
   mermaidGame.preload();
+}
 
-  // load sounds
+function preloadSounds() {
   coinSound = loadSound("assets/soundOfCoins.mp3");
   waterSound = loadSound("assets/soundOfWater.mp3");
   gameOverSound = loadSound("assets/soundOfGameover.mp3");
@@ -29,38 +34,12 @@ function setup() {
 }
 
 function draw() {
-  console.log("draw " + mode);
+  //console.log("draw " + mode);
   clear();
   mermaidGame.background.draw();
 
   if (mode == 0) {
-
-    //background(mermaidGame.backgroundImg);
-    image(woodBoarderImage, 280, 155, 400, 400);
-    image(upImage, 380, 305, 60, 60);
-    let d = color(247, 247, 247); //color(47, 134, 166);
-    fill(d);
-    textSize(25);
-    textFont("Georgia");
-    text(`move up`, WIDTH * 0.45, 342);
-
-    image(downImage, 380, 360, 60, 60);
-    text(`move down`, WIDTH * 0.45, 400);
-
-    textSize(30);
-    textFont("Georgia");
-    text(`press ENTER to start!`, WIDTH * 0.35, 450);
-
-    image(mermaidImage, 70, 105, 200, 200);
-    image(sharkImage, 770, 405, 150, 150);
-
-    
-    let h = color(47, 134, 166);
-    fill(h);
-    textFont("Tahoma");
-    textSize(80);
-    text("MERMAID GAME", 220, 110);
-
+    drawStartGame();
   }
 
   if (mode == 1) {
@@ -95,11 +74,11 @@ function draw() {
 
     if (mermaidGame.lives == 0) {
       gameOverSound.play();
-      mode = 2;
+      mode = MODE_GAME_OVER;
     }
   }
 
-  if (mode == 2) {
+  if (mode == MODE_GAME_OVER) {
     //background(mermaidGame.backgroundImg);
     image(gameoverImage, 280, 45, 400, 400);
 
@@ -111,7 +90,7 @@ function draw() {
     fill(f);
     textSize(55);
     textFont("Georgia");
-    text(`Your score: ${mermaidGame.score}!!`, WIDTH * 0.3, 500);
+    text(`Your score: ${mermaidGame.score}!!`, WIDTH * 0.28, 500);
 
     let n = color(36, 161, 156);
     fill(n);
@@ -139,11 +118,41 @@ function keyPressed() {
     mermaidGame.collision();
   }
 
-  if (keyCode === 82 && mode == 2) {
+  if (keyCode === 82 && mode == MODE_GAME_OVER) {
     mode = 1;
     console.log("mode 1 here");
     mermaidGame.clear();
   }
+}
+
+function drawStartGame() {
+  drawWoodenBoard();
+  drawKeyInstruction("Move Up", upImage, 300);
+  drawKeyInstruction("Move Down", downImage, 360);
+
+  text(`press ENTER to start!`, WIDTH * 0.35, 450);
+
+  image(mermaidImage, 70, 105, 200, 200);
+  image(sharkImage, 770, 405, 150, 150);
+
+  let h = color(47, 134, 166);
+  fill(h);
+  textFont("Tahoma");
+  textSize(80);
+  text("MERMAID GAME", 220, 110);
+}
+
+function drawWoodenBoard() {
+  image(woodBoarderImage, 280, 155, 400, 400);
+}
+
+function drawKeyInstruction(instructionText, keyImage, y) {
+  image(keyImage, 380, y, 60, 60);
+  let d = color(247, 247, 247);
+  fill(d);
+  textSize(25);
+  textFont("Georgia");
+  text(instructionText, WIDTH * 0.45, y + 40);
 }
 
 // IMAGES
@@ -151,9 +160,13 @@ function keyPressed() {
 let sharkImage;
 let coinImage;
 let backgroundImage;
+let heartImage;
 
 // SOUNDS
 
 let coinSound;
 let waterSound;
 let gameOverSound;
+
+// MODE CONSTANTS
+const MODE_GAME_OVER = 2;

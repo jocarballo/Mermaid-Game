@@ -5,7 +5,7 @@ class MermaidGame {
     this.sharks = [];
     this.background = new Background();
     this.score = 0;
-    this.lives = 0;
+    this.lives = 3;
   }
 
   clear() {
@@ -62,21 +62,16 @@ class MermaidGame {
       let treasureRow = treasure.row;
       let treasureCol = treasure.col;
 
-      return (
-        treasure.col >= 0 &&
-        (treasureRow != mermaidRow || treasureCol != mermaidCol)
-      );
+      return (treasure.col >= 0 && (treasureRow != mermaidRow || treasureCol != mermaidCol));
     });
 
-    // check positions of sharks are valid
-    // here I filtered the sharks array and returned the ones that are in the image ( col > 0)
+    // check if positions of sharks are valid
+    // filter the sharks array and return the ones that are in the image ( col > 0)
     //console.log("Sharks before: " + this.sharks.length);
     this.sharks = this.sharks.filter(function (shark) {
       let sharkRow = shark.row;
       let sharkCol = shark.col;
-      return (
-        shark.col >= 0 && (sharkRow != mermaidRow || sharkCol != mermaidCol)
-      );
+      return (shark.col >= 0 && (sharkRow != mermaidRow || sharkCol != mermaidCol));
     });
   }
 
@@ -84,6 +79,8 @@ class MermaidGame {
     this.background.preload();
 
     this.mermaid.preload();
+
+    // NÃO DEVIA FAZER PRELOAD AQUI DAS COINS TAMBÉM?
     for (let i = 0; i < this.sharks.length; i++) {
       let shark = this.sharks[i];
       shark.preload();
@@ -224,8 +221,6 @@ class Shark {
     this.image = sharkImage;
   }
 
-  preload() {}
-
   updatePosition() {
     this.col = this.col - 1;
   }
@@ -242,5 +237,4 @@ class Shark {
   }
 }
 
-/* ------------------------------------------------------ */
 
