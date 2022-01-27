@@ -9,3 +9,7 @@ const HEIGHT_OF_SQUARE = HEIGHT / NUMBER_OF_SQUARES_IN_COL;
 
 //console.log('number of x squares: ' + NUMBEROFXSQUARES)
 //console.log('number of y squares: ' + NUMBEROFYSQUARES)
+
+const MODE_INSTRUCTIONS_GAME = 0;
+const MODE_START_GAME = 1;
+const MODE_GAME_OVER = 2;
