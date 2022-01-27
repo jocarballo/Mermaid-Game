@@ -5,7 +5,7 @@ class MermaidGame {
     this.sharks = [];
     this.background = new Background();
     this.score = 0;
-    this.lives = 3;
+    this.lives = 0;
   }
 
   clear() {
@@ -21,7 +21,7 @@ class MermaidGame {
     //console.log("Number of active sharks:" + this.sharks.length);
 
     // I want to put a new shark when I've got less than 3 in canvas
-    if (this.sharks.length < 3) {
+    if (this.sharks.length < 4) {
       // I add sharks to the sharks array
       this.sharks.push(new Shark());
       //console.log(this.sharks)
@@ -32,7 +32,7 @@ class MermaidGame {
     //console.log("Number of active coins:" + this.treasures.length);
 
     // put a new coin when got less than 3 in canvas
-    if (this.treasures.length < 2) {
+    if (this.treasures.length < 5) {
       //add coins to the treasures array
       //console.log(this.treasures)
 
@@ -121,7 +121,7 @@ class Background {
   }
 
   draw() {
-    console.log("this is the background");
+    //console.log("this is the background");
     // width and height are variables set by P5
     this.backgroundImages.forEach(function (img) {
       img.x -= img.speed;

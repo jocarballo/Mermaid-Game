@@ -34,24 +34,33 @@ function draw() {
   mermaidGame.background.draw();
 
   if (mode == 0) {
+
     //background(mermaidGame.backgroundImg);
-    image(woodBoarderImage, 280, 65, 400, 400);
-    image(upImage, 380, 200, 60, 60);
+    image(woodBoarderImage, 280, 155, 400, 400);
+    image(upImage, 380, 305, 60, 60);
     let d = color(247, 247, 247); //color(47, 134, 166);
     fill(d);
     textSize(25);
     textFont("Georgia");
-    text(`move up`, WIDTH * 0.45, 242);
+    text(`move up`, WIDTH * 0.45, 342);
 
-    image(downImage, 380, 255, 60, 60);
-    text(`move down`, WIDTH * 0.45, 300);
+    image(downImage, 380, 360, 60, 60);
+    text(`move down`, WIDTH * 0.45, 400);
 
     textSize(30);
     textFont("Georgia");
-    text(`press ENTER to start!`, WIDTH * 0.35, 350);
+    text(`press ENTER to start!`, WIDTH * 0.35, 450);
 
-    image(mermaidImage, 70, 25, 200, 200);
-    image(sharkImage, 770, 205, 150, 150);
+    image(mermaidImage, 70, 105, 200, 200);
+    image(sharkImage, 770, 405, 150, 150);
+
+    
+    let h = color(47, 134, 166);
+    fill(h);
+    textFont("Tahoma");
+    textSize(80);
+    text("MERMAID GAME", 220, 110);
+
   }
 
   if (mode == 1) {
@@ -85,25 +94,34 @@ function draw() {
     image(coinImage, 765, 44, 20, 20);
 
     if (mermaidGame.lives == 0) {
-        gameOverSound.play();
-        mode = 2;
+      gameOverSound.play();
+      mode = 2;
     }
   }
 
-
   if (mode == 2) {
     //background(mermaidGame.backgroundImg);
-    image(gameoverImage, 280, 65, 400, 400);
+    image(gameoverImage, 280, 45, 400, 400);
+
+    let s = color(36, 161, 156);
+    fill(s);
+    rect(WIDTH * 0.22, 450, 525, 75, 100);
+
+    let f = color(247, 247, 247); //color(47, 134, 166);
+    fill(f);
+    textSize(55);
+    textFont("Georgia");
+    text(`Your score: ${mermaidGame.score}!!`, WIDTH * 0.3, 500);
 
     let n = color(36, 161, 156);
     fill(n);
-    rect(WIDTH * 0.15, 495, 725, 95, 50);
+    rect(WIDTH * 0.26, 545, 452, 75, 40);
 
     let k = color(247, 247, 247); //color(47, 134, 166);
     fill(k);
-    textSize(55);
+    textSize(35);
     textFont("Georgia");
-    text(`press R to restart the game!`, WIDTH * 0.18, 552);
+    text(`press R to restart the game!`, WIDTH * 0.28, 592);
   }
 }
 
@@ -118,6 +136,7 @@ function keyPressed() {
   }
   if (keyCode === 40) {
     mermaidGame.mermaid.moveDown();
+    mermaidGame.collision();
   }
 
   if (keyCode === 82 && mode == 2) {
